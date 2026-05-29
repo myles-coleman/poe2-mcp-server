@@ -142,6 +142,57 @@ claude mcp add poe2 node /path/to/poe2-mcp-server/dist/index.js --league "Standa
 npx @modelcontextprotocol/inspector node dist/index.js
 ```
 
+## Docker
+
+The server can run inside a container. The image is built from a multi-stage `Dockerfile` on a multi-arch `node:22-alpine` base, so it runs natively on both `amd64` and `arm64` (ARM) hosts.
+
+### Build the image
+
+```bash
+docker build -t poe2-mcp-server:latest .
+```
+
+### Run with an MCP client
+
+The server speaks MCP over **stdio**, so the client launches the container directly with `docker run -i` (the `-i` flag is required to keep stdin open; do not add `-t`).
+
+Example `opencode.json`:
+
+```json
+{
+  "mcp": {
+    "poe2": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "poe2-mcp-server:latest"],
+      "enabled": true
+    }
+  }
+}
+```
+
+### Local logs / PoB builds
+
+The `--poe2-path` and `--pob2-path` features read files from the host, so the relevant folders must be mounted into the container (read-only) and the matching flag appended after the image name:
+
+```json
+{
+  "mcp": {
+    "poe2": {
+      "type": "local",
+      "command": [
+        "docker", "run", "--rm", "-i",
+        "-v", "C:/Program Files (x86)/Steam/steamapps/common/Path of Exile 2:/data/poe2:ro",
+        "poe2-mcp-server:latest",
+        "--poe2-path", "/data/poe2"
+      ],
+      "enabled": true
+    }
+  }
+}
+```
+
+> **Windows users:** Use forward slashes in the `-v` host path, and make sure the drive/folder is shared in **Docker Desktop → Settings → Resources → File Sharing**. Docker Desktop must be running before the MCP client starts.
+
 ## Example Prompts
 
 Once connected, try asking:
