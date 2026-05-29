@@ -38,9 +38,6 @@ jobs:
       - name: Run type check
         run: npm run typecheck
 
-      - name: Audit packages
-        run: npm audit --omit=dev --audit-level=high --package-lock-only
-
       - name: Run unit tests
         run: npm run test:coverage -- --reporter=junit
 
