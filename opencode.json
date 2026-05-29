@@ -3,10 +3,15 @@
     "poe2": {
       "type": "local",
       "command": [
-        "docker", "run", "--rm", "-i",
-        "-v", "C:/Program Files (x86)/Steam/steamapps/common/Path of Exile 2:/data/poe2:ro",
+        "docker",
+        "run",
+        "--rm",
+        "-i",
+        "-v",
+        "C:/Program Files (x86)/Steam/steamapps/common/Path of Exile 2:/data/poe2:ro",
         "poe2-mcp-server:latest",
-        "--poe2-path", "/data/poe2"
+        "--poe2-path",
+        "/data/poe2"
       ],
       "enabled": true
     }
