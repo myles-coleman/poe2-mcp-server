@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+
       - name: Set up Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
@@ -42,7 +43,7 @@ jobs:
 
       - name: Run unit tests
         run: npm run test:coverage -- --reporter=junit
-        
+
   release:
     needs: test
     name: Publish release
@@ -57,12 +58,15 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: 20
+
       - name: Install dependencies
         run: npm install --save-dev semantic-release@23 @semantic-release/changelog@6 @semantic-release/git@10 @semantic-release/exec@6 conventional-changelog-conventionalcommits@7
+
       - name: Release
         id: release
         env:
